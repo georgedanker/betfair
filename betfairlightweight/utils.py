@@ -18,7 +18,7 @@ TICK_SIZES = {
 }
 
 
-def check_status_code(response: requests.Response, codes: list = None) -> None:
+def check_status_code(response, codes=None):
     """
     Checks response.status_code is in codes.
 
@@ -31,7 +31,7 @@ def check_status_code(response: requests.Response, codes: list = None) -> None:
         raise StatusCodeError(response.status_code)
 
 
-def clean_locals(data: dict) -> dict:
+def clean_locals(data):
     """
     Clean up locals dict, remove empty and self/session/params params
     and convert to camelCase.
@@ -49,7 +49,7 @@ def clean_locals(data: dict) -> dict:
         }
 
 
-def to_camel_case(snake_str: str) -> str:
+def to_camel_case(snake_str):
     """
     Converts snake_string to camelCase
 

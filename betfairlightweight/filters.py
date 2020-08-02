@@ -6,17 +6,17 @@ from .resources import bettingresources
 
 
 def streaming_market_filter(
-    market_ids: list = None,
-    bsp_market: bool = None,
-    betting_types: list = None,
-    event_type_ids: list = None,
-    event_ids: list = None,
-    turn_in_play_enabled: bool = None,
-    market_types: list = None,
-    venues: list = None,
-    country_codes: list = None,
-    race_types: list = None,
-) -> dict:
+    market_ids=None,
+    bsp_market=None,
+    betting_types=None,
+    event_type_ids=None,
+    event_ids=None,
+    turn_in_play_enabled=None,
+    market_types=None,
+    venues=None,
+    country_codes=None,
+    race_types=None,
+):
     """
     :param list market_ids: filter market data to data pertaining to specific marketIds.
     :param list event_type_ids: filter market data to data pertaining to specific event_type ids.
@@ -36,8 +36,8 @@ def streaming_market_filter(
 
 
 def streaming_market_data_filter(
-    fields: list = None, ladder_levels: int = None
-) -> dict:
+    fields=None, ladder_levels=None
+):
     """
     :param list fields: EX_BEST_OFFERS_DISP, EX_BEST_OFFERS, EX_ALL_OFFERS, EX_TRADED,
     EX_TRADED_VOL, EX_LTP, EX_MARKET_DEF, SP_TRADED, SP_PROJECTED
@@ -50,10 +50,10 @@ def streaming_market_data_filter(
 
 
 def streaming_order_filter(
-    include_overall_position: bool = None,
-    customer_strategy_refs: list = None,
-    partition_matched_by_strategy_ref: bool = None,
-) -> dict:
+    include_overall_position=None,
+    customer_strategy_refs=None,
+    partition_matched_by_strategy_ref=None,
+):
     """
     :param bool include_overall_position: Returns overall / net position (OrderRunnerChange.mb / OrderRunnerChange.ml)
     :param list customer_strategy_refs: Restricts to specified customerStrategyRefs; this will filter orders and
@@ -68,9 +68,9 @@ def streaming_order_filter(
 
 
 def time_range(
-    from_: Union[str, datetime.datetime] = None,
-    to: Union[str, datetime.datetime] = None,
-) -> dict:
+    from_=None,
+    to=None,
+):
     """
     :param Union[str, datetime.datetime] from_:
     :param Union[str, datetime.datetime] to:
@@ -95,22 +95,22 @@ def time_range(
 
 
 def market_filter(
-    text_query: str = None,
-    event_type_ids: list = None,
-    event_ids: list = None,
-    competition_ids: list = None,
-    market_ids: list = None,
-    venues: list = None,
-    bsp_only: bool = None,
-    turn_in_play_enabled: bool = None,
-    in_play_only: bool = None,
-    market_betting_types: list = None,
-    market_countries: list = None,
-    market_type_codes: list = None,
-    market_start_time: dict = None,
-    with_orders: str = None,
-    race_types: list = None,
-) -> dict:
+    text_query=None,
+    event_type_ids=None,
+    event_ids=None,
+    competition_ids=None,
+    market_ids=None,
+    venues=None,
+    bsp_only=None,
+    turn_in_play_enabled=None,
+    in_play_only=None,
+    market_betting_types=None,
+    market_countries=None,
+    market_type_codes=None,
+    market_start_time=None,
+    with_orders=None,
+    race_types=None,
+    ):
     """
     :param str text_query: restrict markets by text associated with it, e.g name, event, comp.
     :param list event_type_ids: filter market data to data pertaining to specific event_type ids.
@@ -135,12 +135,12 @@ def market_filter(
 
 
 def price_data(
-    sp_available: bool = False,
-    sp_traded: bool = False,
-    ex_best_offers: bool = False,
-    ex_all_offers: bool = False,
-    ex_traded: bool = False,
-) -> list:
+    sp_available=False,
+    sp_traded=False,
+    ex_best_offers=False,
+    ex_all_offers=False,
+    ex_traded=False,
+):
     """
     Create PriceData filter list from all args passed as True.
     :param bool sp_available: Amount available for the BSP auction.
@@ -157,12 +157,12 @@ def price_data(
 
 
 def ex_best_offers_overrides(
-    best_prices_depth: int = None,
-    rollup_model: str = None,
-    rollup_limit: int = None,
-    rollup_liability_threshold: float = None,
-    rollup_liability_factor: int = None,
-) -> dict:
+    best_prices_depth=None,
+    rollup_model=None,
+    rollup_limit=None,
+    rollup_liability_threshold=None,
+    rollup_liability_factor=None,
+):
     """
     Create filter to specify whether to accumulate market volume info, how deep a book to return and rollup methods if
     accumulation is selected.
@@ -186,11 +186,11 @@ def ex_best_offers_overrides(
 
 
 def price_projection(
-    price_data: list = None,
-    ex_best_offers_overrides: dict = None,
-    virtualise: bool = True,
-    rollover_stakes: bool = False,
-) -> dict:
+    price_data=None,
+    ex_best_offers_overrides=None,
+    virtualise=True,
+    rollover_stakes=False,
+):
     """
     Selection criteria of the returning price data.
     :param list price_data: PriceData filter to specify what market data we wish to receive.
@@ -211,15 +211,15 @@ def price_projection(
 
 
 def place_instruction(
-    order_type: str,
-    selection_id: int,
-    side: str,
-    handicap: float = None,
-    limit_order: dict = None,
-    limit_on_close_order: dict = None,
-    market_on_close_order: dict = None,
-    customer_order_ref: str = None,
-) -> dict:
+    order_type,
+    selection_id,
+    side,
+    handicap=None,
+    limit_order=None,
+    limit_on_close_order=None,
+    market_on_close_order=None,
+    customer_order_ref=None,
+):
     """
     Create order instructions to place an order at exchange.
     :param str order_type: define type of order to place.
@@ -240,14 +240,14 @@ def place_instruction(
 
 
 def limit_order(
-    price: float,
-    persistence_type: str = None,
-    size: float = None,
-    time_in_force: str = None,
-    min_fill_size: float = None,
-    bet_target_type: str = None,
-    bet_target_size: float = None,
-) -> dict:
+    price,
+    persistence_type=None,
+    size=None,
+    time_in_force=None,
+    min_fill_size=None,
+    bet_target_type=None,
+    bet_target_size=None,
+):
     """
     Create a limit order to send to exchange.
     :param float size: amount in account currency to be sent.
@@ -267,7 +267,7 @@ def limit_order(
     return {to_camel_case(k): v for k, v in args.items() if v is not None}
 
 
-def limit_on_close_order(liability: float, price: float) -> dict:
+def limit_on_close_order(liability, price):
     """
     Create limit order for the closing auction.
     :param float liability: amount to bet.
@@ -279,7 +279,7 @@ def limit_on_close_order(liability: float, price: float) -> dict:
     return locals().copy()
 
 
-def market_on_close_order(liability: float) -> dict:
+def market_on_close_order(liability):
     """
     Create market order to be placed in the closing auction.
     :param float liability: amount to bet.
@@ -290,7 +290,7 @@ def market_on_close_order(liability: float) -> dict:
     return locals().copy()
 
 
-def cancel_instruction(bet_id: str, size_reduction: float = None) -> dict:
+def cancel_instruction(bet_id, size_reduction=None):
     """
     Instruction to fully or partially cancel an order (only applies to LIMIT orders)
     :param str bet_id: identifier of the bet to cancel.
@@ -303,7 +303,7 @@ def cancel_instruction(bet_id: str, size_reduction: float = None) -> dict:
     return {to_camel_case(k): v for k, v in args.items() if v is not None}
 
 
-def replace_instruction(bet_id: str, new_price: float) -> dict:
+def replace_instruction(bet_id, new_price):
     """
     Instruction to replace a LIMIT or LIMIT_ON_CLOSE order at a new price.
     Original order will be cancelled and a new order placed at the new price for the remaining stake.
@@ -317,7 +317,7 @@ def replace_instruction(bet_id: str, new_price: float) -> dict:
     return {to_camel_case(k): v for k, v in args.items() if v is not None}
 
 
-def update_instruction(bet_id: str, new_persistence_type: str) -> dict:
+def update_instruction(bet_id, new_persistence_type):
     """
     Instruction to update LIMIT bet's persistence of an order that do not affect exposure
     :param str bet_id: Unique identifier for the bet

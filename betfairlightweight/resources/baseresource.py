@@ -16,12 +16,12 @@ class BaseResource:
         self._datetime_updated = now
         self._data = kwargs
 
-    def json(self) -> str:
+    def json(self):
         return json.dumps(self._data)
 
     @staticmethod
-    @functools.lru_cache()
-    def strip_datetime(value: Union[str, int]) -> Optional[datetime.datetime]:
+    #@functools.lru_cache()
+    def strip_datetime(value):
         """
         Converts value to datetime if string or int.
         """
@@ -36,8 +36,8 @@ class BaseResource:
             except (ValueError, OverflowError, OSError):
                 return
 
-    def __repr__(self) -> str:
+    def __repr__(self):
         return "<%s>" % self.__class__.__name__
 
-    def __str__(self) -> str:
+    def __str__(self):
         return self.__class__.__name__

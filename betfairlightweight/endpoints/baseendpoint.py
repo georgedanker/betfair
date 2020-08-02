@@ -15,15 +15,15 @@ class BaseEndpoint:
     read_timeout = 16
     _error = APIError
 
-    def __init__(self, parent: BaseClient):
+    def __init__(self, parent):
         """
         :param parent: API client.
         """
         self.client = parent
 
     def request(
-        self, method: str, params: dict, session: requests.Session
-    ) -> (dict, float):
+        self, method, params, session
+    ):
         """
         :param str method: Betfair api-ng method to be used.
         :param dict params: Params to be used in request
@@ -56,7 +56,7 @@ class BaseEndpoint:
         return response, response_json, elapsed_time
 
     @staticmethod
-    def create_req(method: str, params: dict) -> str:
+    def create_req(method, params):
         """
         :param method: Betfair api-ng method to be used.
         :param params: Params to be used in request.
@@ -67,8 +67,8 @@ class BaseEndpoint:
         )
 
     def _error_handler(
-        self, response: dict, method: str = None, params: dict = None
-    ) -> None:
+        self, response, method=None, params=None
+    ):
         """
         :param response: Json response.
         :param params: Params to be used in request.
@@ -82,11 +82,11 @@ class BaseEndpoint:
 
     def process_response(
         self,
-        response_json: Union[dict, list],
-        resource: Type[BaseResource],
-        elapsed_time: float,
-        lightweight: bool,
-    ) -> Union[BaseResource, dict, list]:
+        response_json,
+        resource,
+        elapsed_time,
+        lightweight,
+    ):
         """
         :param requests.Response response: requests Response object
         :param dict/list response_json: Response in dict format
@@ -115,5 +115,5 @@ class BaseEndpoint:
                 raise InvalidResponse(response=result)
 
     @property
-    def url(self) -> str:
+    def url(self):
         return "%s%s" % (self.client.api_uri, "betting/json-rpc/v1")

@@ -15,11 +15,11 @@ class Scores(BaseEndpoint):
 
     def list_race_details(
         self,
-        meeting_ids: dict = None,
-        race_ids: str = None,
-        session: requests.Session = None,
-        lightweight: bool = None,
-    ) -> Union[list, List[resources.RaceDetails]]:
+        meeting_ids=None,
+        race_ids=None,
+        session=None,
+        lightweight=None,
+    ):
         """
         Search for races to get their details.
 
@@ -44,12 +44,12 @@ class Scores(BaseEndpoint):
 
     def list_available_events(
         self,
-        event_ids: list = None,
-        event_type_ids: list = None,
-        event_status: list = None,
-        session: requests.Session = None,
-        lightweight: bool = None,
-    ) -> Union[list, List[resources.AvailableEvent]]:
+        event_ids=None,
+        event_type_ids=None,
+        event_status=None,
+        session=None,
+        lightweight=None,
+    ):
         """
         Search for events that have live score data available.
 
@@ -70,10 +70,10 @@ class Scores(BaseEndpoint):
 
     def list_scores(
         self,
-        update_keys: list,
-        session: requests.Session = None,
-        lightweight: bool = None,
-    ) -> Union[list, List[resources.Score]]:
+        update_keys,
+        session=None,
+        lightweight=None,
+    ):
         """
         Returns a list of current scores for the given events.
 
@@ -93,10 +93,10 @@ class Scores(BaseEndpoint):
 
     def list_incidents(
         self,
-        update_keys: dict,
-        session: requests.Session = None,
-        lightweight: bool = None,
-    ) -> Union[list, List[resources.Incidents]]:
+        update_keys,
+        session=None,
+        lightweight=None,
+    ):
         """
         Returns a list of incidents for the given events.
 
@@ -115,5 +115,5 @@ class Scores(BaseEndpoint):
         )
 
     @property
-    def url(self) -> str:
+    def url(self):
         return "%s%s" % (self.client.api_uri, "scores/json-rpc/v1")

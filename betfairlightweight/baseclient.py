@@ -15,7 +15,7 @@ NAVIGATION = (
 USER_AGENT = default_user_agent()
 
 
-class BaseClient:
+class BaseClient(object):
     """
     Base API client
     """
@@ -49,14 +49,14 @@ class BaseClient:
 
     def __init__(
         self,
-        username: str,
-        password: str = None,
-        app_key: str = None,
-        certs: str = None,
-        locale: str = None,
-        cert_files: list = None,
-        lightweight: bool = False,
-        session: requests.Session = None,
+        username,
+        password=None,
+        app_key=None,
+        certs=None,
+        locale=None,
+        cert_files=None,
+        lightweight=False,
+        session=None,
     ):
         """
         Creates base client for API operations.
@@ -90,7 +90,7 @@ class BaseClient:
         self.get_password()
         self.get_app_key()
 
-    def set_session_token(self, session_token: str) -> None:
+    def set_session_token(self, session_token):
         """
         Sets session token and new login time.
 
@@ -99,7 +99,7 @@ class BaseClient:
         self.session_token = session_token
         self._login_time = time.time()
 
-    def get_password(self) -> str:
+    def get_password(self):
         """
         If password is not provided will look in environment variables
         for self.username+'password'.
@@ -111,7 +111,7 @@ class BaseClient:
                 raise PasswordError(self.username)
         return self.password
 
-    def get_app_key(self) -> str:
+    def get_app_key(self):
         """
         If app_key is not provided will look in environment
         variables for username.
@@ -123,7 +123,7 @@ class BaseClient:
                 raise AppKeyError(self.username)
         return self.app_key
 
-    def client_logout(self) -> None:
+    def client_logout(self):
         """
         Resets session token and login time.
         """
@@ -131,7 +131,7 @@ class BaseClient:
         self._login_time = None
 
     @property
-    def session_expired(self) -> bool:
+    def session_expired(self):
         """
         Returns True if login_time not set or seconds since
         login time is greater half session timeout.
@@ -144,7 +144,7 @@ class BaseClient:
             return False
 
     @property
-    def cert(self) -> list:
+    def cert(self):
         """
         The betfair certificates, by default it looks for the
         certificates in /certs/.
@@ -178,7 +178,7 @@ class BaseClient:
         return [cert, key]
 
     @property
-    def login_headers(self) -> dict:
+    def login_headers(self):
         return {
             "Accept": "application/json",
             "X-Application": self.app_key,
@@ -187,7 +187,7 @@ class BaseClient:
         }
 
     @property
-    def keep_alive_headers(self) -> dict:
+    def keep_alive_headers(self):
         return {
             "Accept": "application/json",
             "X-Application": self.app_key,
@@ -197,7 +197,7 @@ class BaseClient:
         }
 
     @property
-    def request_headers(self) -> dict:
+    def request_headers(self):
         return {
             "X-Application": self.app_key,
             "X-Authentication": self.session_token,

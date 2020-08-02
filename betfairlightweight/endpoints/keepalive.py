@@ -17,8 +17,8 @@ class KeepAlive(BaseEndpoint):
     _error = KeepAliveError
 
     def __call__(
-        self, session: requests.Session = None, lightweight: bool = None
-    ) -> Union[dict, KeepAliveResource]:
+        self, session=None, lightweight=None
+    ):
         """
         Makes keep alive request.
 
@@ -34,8 +34,8 @@ class KeepAlive(BaseEndpoint):
         )
 
     def request(
-        self, method: str = None, params: dict = None, session: requests.Session = None
-    ) -> (dict, float):
+        self, method=None, params=None, session=None
+    ):
         session = session or self.client.session
         time_sent = time.time()
         try:
@@ -57,11 +57,11 @@ class KeepAlive(BaseEndpoint):
         return response, response_json, elapsed_time
 
     def _error_handler(
-        self, response: dict, method: str = None, params: dict = None
-    ) -> None:
+        self, response, method=None, params=None
+    ):
         if response.get("status") != "SUCCESS":
             raise self._error(response)
 
     @property
-    def url(self) -> str:
+    def url(self):
         return "%s%s" % (self.client.identity_uri, "keepAlive")

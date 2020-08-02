@@ -17,7 +17,7 @@ class RaceCard(BaseEndpoint):
 
     app_key = None
 
-    def login(self, session: requests.Session = None) -> None:
+    def login(self, session=None):
         """
         Parses app key from betfair exchange site.
 
@@ -40,11 +40,11 @@ class RaceCard(BaseEndpoint):
 
     def get_race_card(
         self,
-        market_ids: list,
-        data_entries: str = None,
-        session: requests.Session = None,
-        lightweight: bool = False,
-    ) -> Union[list, List[resources.RaceCard]]:
+        market_ids,
+        data_entries=None,
+        session=None,
+        lightweight=False,
+    ):
         """
         Returns a list of race cards based on market ids provided.
 
@@ -70,11 +70,11 @@ class RaceCard(BaseEndpoint):
 
     def get_race_result(
         self,
-        market_ids: list,
-        data_entries: str = None,
-        session: requests.Session = None,
-        lightweight: bool = True,
-    ) -> list:
+        market_ids,
+        data_entries=None,
+        session=None,
+        lightweight=True,
+    ):
         """
         Returns a list of race results based on event ids provided.
 
@@ -97,8 +97,8 @@ class RaceCard(BaseEndpoint):
         return self.process_response(response_json, None, elapsed_time, lightweight)
 
     def request(
-        self, method: str = None, params: dict = None, session: requests.Session = None
-    ) -> (dict, float):
+        self, method=None, params=None, session=None
+    ):
         session = session or self.client.session
         time_sent = time.time()
         url = "%s%s" % (self.url, method)
@@ -119,13 +119,13 @@ class RaceCard(BaseEndpoint):
         return response, response_json, elapsed_time
 
     @staticmethod
-    def create_race_card_req(market_ids: list, data_entries: str) -> dict:
+    def create_race_card_req(market_ids, data_entries):
         if not data_entries:
             data_entries = "RACE, TIMEFORM_DATA, RUNNERS, RUNNER_DETAILS"
         return {"dataEntries": data_entries, "marketId": ",".join(market_ids)}
 
     @staticmethod
-    def create_race_result_req(market_ids: list, data_entries: str) -> dict:
+    def create_race_result_req(market_ids, data_entries):
         if not data_entries:
             data_entries = "RUNNERS, MARKETS, PRICES, RACE, COURSE"
         return {
@@ -135,7 +135,7 @@ class RaceCard(BaseEndpoint):
         }
 
     @property
-    def headers(self) -> dict:
+    def headers(self):
         return {
             "Connection": "keep-alive",
             "Content-Type": "application/json",
@@ -143,9 +143,9 @@ class RaceCard(BaseEndpoint):
         }
 
     @property
-    def login_url(self) -> str:
+    def login_url(self):
         return "https://www.betfair.com/exchange/plus/"
 
     @property
-    def url(self) -> str:
+    def url(self):
         return "https://www.betfair.com/rest/v2/"

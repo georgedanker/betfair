@@ -15,8 +15,8 @@ class InPlayService(BaseEndpoint):
     """
 
     def get_event_timeline(
-        self, event_id: int, session: requests.Session = None, lightweight: bool = None
-    ) -> Union[list, resources.EventTimeline]:
+        self, event_id, session=None, lightweight=None
+    ):
         """
         Returns event timeline for event id provided.
 
@@ -42,10 +42,10 @@ class InPlayService(BaseEndpoint):
 
     def get_event_timelines(
         self,
-        event_ids: list,
-        session: requests.Session = None,
-        lightweight: bool = None,
-    ) -> Union[list, List[resources.EventTimeline]]:
+        event_ids,
+        session=None,
+        lightweight=None,
+    ):
         """
         Returns a list of event timelines based on event id's
         supplied.
@@ -72,10 +72,10 @@ class InPlayService(BaseEndpoint):
 
     def get_scores(
         self,
-        event_ids: list,
-        session: requests.Session = None,
-        lightweight: bool = None,
-    ) -> Union[list, List[resources.Scores]]:
+        event_ids,
+        session=None,
+        lightweight=None,
+    ):
         """
         Returns a list of scores based on event id's
         supplied.
@@ -102,11 +102,11 @@ class InPlayService(BaseEndpoint):
 
     def request(
         self,
-        method: str = None,
-        params: dict = None,
-        session: requests.Session = None,
-        url: str = None,
-    ) -> (dict, float):
+        method=None,
+        params=None,
+        session=None,
+        url=None,
+    ):
         session = session or self.client.session
         time_sent = time.time()
         try:
@@ -126,9 +126,9 @@ class InPlayService(BaseEndpoint):
         return response, response_json, elapsed_time
 
     @property
-    def headers(self) -> dict:
+    def headers(self):
         return {"Connection": "keep-alive", "Content-Type": "application/json"}
 
     @property
-    def url(self) -> str:
+    def url(self):
         return "https://ips.betfair.com/inplayservice/v1.1/"

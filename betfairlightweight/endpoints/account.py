@@ -17,10 +17,10 @@ class Account(BaseEndpoint):
 
     def get_account_funds(
         self,
-        wallet: str = None,
-        session: requests.Session = None,
-        lightweight: bool = None,
-    ) -> Union[dict, resources.AccountFunds]:
+        wallet=None,
+        session=None,
+        lightweight=None,
+    ):
         """
         Get available to bet amount.
 
@@ -38,8 +38,8 @@ class Account(BaseEndpoint):
         )
 
     def get_account_details(
-        self, session: requests.Session = None, lightweight: bool = None
-    ) -> Union[dict, resources.AccountDetails]:
+        self, session=None, lightweight=None
+    ):
         """
         Returns the details relating your account, including your discount
         rate and Betfair point balance.
@@ -58,15 +58,15 @@ class Account(BaseEndpoint):
 
     def get_account_statement(
         self,
-        locale: str = None,
-        from_record: int = None,
-        record_count: int = None,
-        item_date_range: dict = time_range(),
-        include_item: str = None,
-        wallet: str = None,
-        session: requests.Session = None,
-        lightweight: bool = None,
-    ) -> Union[dict, resources.AccountStatementResult]:
+        locale=None,
+        from_record=None,
+        record_count=None,
+        item_date_range=time_range(),
+        include_item=None,
+        wallet=None,
+        session=None,
+        lightweight=None,
+    ):
         """
         Get account statement.
 
@@ -90,10 +90,10 @@ class Account(BaseEndpoint):
 
     def list_currency_rates(
         self,
-        from_currency: str = None,
-        session: requests.Session = None,
-        lightweight: bool = None,
-    ) -> Union[dict, List[resources.CurrencyRate]]:
+        from_currency=None,
+        session=None,
+        lightweight=None,
+    ):
         """
         Returns a list of currency rates based on given currency
 
@@ -110,7 +110,7 @@ class Account(BaseEndpoint):
             response_json, resources.CurrencyRate, elapsed_time, lightweight
         )
 
-    def transfer_funds(self, session: requests.Session = None) -> None:
+    def transfer_funds(self, session=None):
         """
         Transfer funds between the UK Exchange and other wallets
 
@@ -124,5 +124,5 @@ class Account(BaseEndpoint):
         )
 
     @property
-    def url(self) -> str:
+    def url(self):
         return "%s%s" % (self.client.api_uri, "account/json-rpc/v1")

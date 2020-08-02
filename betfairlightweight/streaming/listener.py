@@ -1,5 +1,5 @@
 import logging
-import queue
+#import queue
 from typing import Optional
 
 from .stream import BaseStream, MarketStream, OrderStream
@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 
 class BaseListener:
-    def __init__(self, max_latency: Optional[float] = 0.5):
+    def __init__(self, max_latency=0.5):
         self.max_latency = max_latency
 
         self.connection_id = None
@@ -18,7 +18,7 @@ class BaseListener:
         self.stream_unique_id = None
         self.connections_available = None  # connection throttling
 
-    def register_stream(self, unique_id: int, operation: str) -> None:
+    def register_stream(self, unique_id, operation):
         logger.info("Register: %s %s" % (operation, unique_id))
         if self.stream is not None:
             logger.warning(
@@ -28,10 +28,10 @@ class BaseListener:
         self.stream_type = operation
         self.stream = self._add_stream(unique_id, operation)
 
-    def on_data(self, raw_data: str) -> None:
+    def on_data(self, raw_data):
         logger.info(raw_data)
 
-    def snap(self, market_ids: list = None) -> list:
+    def snap(self, market_ids=None):
         """Returns a 'snap' of the current cache
         data.
 
@@ -44,30 +44,30 @@ class BaseListener:
             return []
 
     @property
-    def updates_processed(self) -> int:
+    def updates_processed(self):
         if self.stream:
             return self.stream._updates_processed
 
     @property
-    def initial_clk(self) -> str:
+    def initial_clk(self):
         if self.stream is not None:
             return self.stream._initial_clk
 
     @property
-    def clk(self) -> str:
+    def clk(self):
         if self.stream is not None:
             return self.stream._clk
 
-    def _add_stream(self, unique_id: int, operation: str) -> BaseStream:
+    def _add_stream(self, unique_id, operation):
         if operation == "marketSubscription":
             return MarketStream(self)
         elif operation == "orderSubscription":
             return OrderStream(self)
 
-    def __str__(self) -> str:
+    def __str__(self):
         return "{0}".format(self.__class__.__name__)
 
-    def __repr__(self) -> str:
+    def __repr__(self):
         return "<{0}>".format(self.__class__.__name__)
 
 
@@ -79,9 +79,9 @@ class StreamListener(BaseListener):
 
     def __init__(
         self,
-        output_queue: queue.Queue = None,
-        max_latency: Optional[float] = 0.5,
-        lightweight: bool = False,
+        output_queue=None,
+        max_latency=0.5,
+        lightweight=False,
     ):
         """
         :param Queue output_queue: Queue used to return data
@@ -92,7 +92,7 @@ class StreamListener(BaseListener):
         self.output_queue = output_queue
         self.lightweight = lightweight
 
-    def on_data(self, raw_data: str) -> Optional[bool]:
+    def on_data(self, raw_data):
         """Called when raw data is received from connection.
         Override this method if you wish to manually handle
         the stream data
@@ -126,7 +126,7 @@ class StreamListener(BaseListener):
                 return
             self._on_change_message(data, unique_id)
 
-    def _on_connection(self, data: dict, unique_id: int) -> None:
+    def _on_connection(self, data, unique_id):
         """Called on collection operation
 
         :param data: Received data
@@ -138,7 +138,7 @@ class StreamListener(BaseListener):
             "[Connect: %s]: connection_id: %s" % (unique_id, self.connection_id)
         )
 
-    def _on_status(self, data: dict, unique_id: int) -> None:
+    def _on_status(self, data, unique_id):
         """Called on status operation
 
         :param data: Received data
@@ -152,7 +152,7 @@ class StreamListener(BaseListener):
             % (unique_id, status_code, self.connections_available)
         )
 
-    def _on_change_message(self, data: dict, unique_id: int) -> None:
+    def _on_change_message(self, data, unique_id):
         change_type = data.get("ct", "UPDATE")
 
         logger.debug("[Subscription: %s]: %s: %s" % (unique_id, change_type, data))
@@ -167,7 +167,7 @@ class StreamListener(BaseListener):
             self.stream.on_update(data)
 
     @staticmethod
-    def _error_handler(data: dict, unique_id: int) -> Optional[bool]:
+    def _error_handler(data, unique_id):
         """Called when data first received
 
         :param data: Received data

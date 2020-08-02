@@ -15,7 +15,7 @@ class Streaming:
     Streaming operations.
     """
 
-    def __init__(self, parent: BaseClient):
+    def __init__(self, parent):
         """
         :param parent: API client.
         """
@@ -23,12 +23,12 @@ class Streaming:
 
     def create_stream(
         self,
-        unique_id: int = 0,
-        listener: BaseListener = None,
-        timeout: float = 11,
-        buffer_size: int = 1024,
-        host: str = None,
-    ) -> BetfairStream:
+        unique_id=0,
+        listener=None,
+        timeout=11,
+        buffer_size=1024,
+        host=None,
+    ):
         """
         Creates BetfairStream.
 
@@ -53,8 +53,8 @@ class Streaming:
 
     @staticmethod
     def create_historical_stream(
-        file_path: str = None, listener: BaseListener = None
-    ) -> HistoricalStream:
+        file_path=None, listener=None, **kwargs
+    ):
         """
         Uses streaming listener/cache to parse betfair
         historical data:
@@ -65,13 +65,20 @@ class Streaming:
 
         :rtype: HistoricalStream
         """
+        if file_path is None and kwargs.get("directory"):
+            warnings.warn(
+                "directory is deprecated; use file_path", DeprecationWarning,
+            )
+            file_path = kwargs.get("directory")
+
         listener = listener if listener else BaseListener()
+        listener.register_stream(0, "marketSubscription")
         return HistoricalStream(file_path, listener)
 
     @staticmethod
     def create_historical_generator_stream(
-        file_path: str = None, listener: BaseListener = None
-    ) -> HistoricalGeneratorStream:
+        file_path=None, listener=None, **kwargs
+    ):
         """
         Uses generator listener/cache to parse betfair
         historical data:
@@ -82,5 +89,12 @@ class Streaming:
 
         :rtype: HistoricalGeneratorStream
         """
+        if file_path is None and kwargs.get("directory"):
+            warnings.warn(
+                "directory is deprecated; use file_path", DeprecationWarning,
+            )
+            file_path = kwargs.get("directory")
+
         listener = listener if listener else StreamListener()
+        listener.register_stream(0, "marketSubscription")
         return HistoricalGeneratorStream(file_path, listener)

@@ -7,7 +7,7 @@ class EventType:
     :type name: unicode
     """
 
-    def __init__(self, id: str, name: str):
+    def __init__(self, id, name):
         self.id = id
         self.name = name
 
@@ -30,7 +30,7 @@ class Competition:
     :type name: unicode
     """
 
-    def __init__(self, id: str, name: str):
+    def __init__(self, id, name):
         self.id = id
         self.name = name
 
@@ -84,12 +84,12 @@ class Event:
 
     def __init__(
         self,
-        id: str,
-        openDate: str,
-        timezone: str,
-        name: str,
-        countryCode: str = None,
-        venue: str = None,
+        id,
+        openDate,
+        timezone,
+        name,
+        countryCode=None,
+        venue=None,
     ):
         self.id = id
         self.open_date = BaseResource.strip_datetime(openDate)
@@ -156,7 +156,7 @@ class LineRangeInfo:
     """
 
     def __init__(
-        self, marketUnit: str, interval: float, minUnitValue: float, maxUnitValue: float
+        self, marketUnit, interval, minUnitValue, maxUnitValue
     ):
         self.market_unit = marketUnit
         self.interval = interval
@@ -169,7 +169,7 @@ class PriceLadderDescription:
     :type type: unicode
     """
 
-    def __init__(self, type: str):
+    def __init__(self, type):
         self.type = type
 
     def serialise(self):
@@ -197,25 +197,25 @@ class MarketCatalogueDescription:
 
     def __init__(
         self,
-        bettingType: str,
-        bspMarket: bool,
-        marketTime: str,
-        suspendTime: str,
-        turnInPlayEnabled: bool,
-        wallet: str = None,
-        marketType: str = None,
-        discountAllowed: bool = None,
-        marketBaseRate: float = None,
-        persistenceEnabled: bool = None,
-        regulator: str = None,
-        rules: str = None,
-        rulesHasDate: bool = None,
-        eachWayDivisor: float = None,
-        clarifications: str = None,
-        priceLadderDescription: dict = None,
-        keyLineDefinition: str = None,
-        lineRangeInfo: dict = None,
-        raceType: str = None,
+        bettingType,
+        bspMarket,
+        marketTime,
+        suspendTime,
+        turnInPlayEnabled,
+        wallet=None,
+        marketType=None,
+        discountAllowed=None,
+        marketBaseRate=None,
+        persistenceEnabled=None,
+        regulator=None,
+        rules=None,
+        rulesHasDate=None,
+        eachWayDivisor=None,
+        clarifications=None,
+        priceLadderDescription=None,
+        keyLineDefinition=None,
+        lineRangeInfo=None,
+        raceType=None,
     ):
         self.betting_type = bettingType
         self.bsp_market = bspMarket
@@ -328,7 +328,7 @@ class PriceSize(Slotable):
 
     __slots__ = ["price", "size"]
 
-    def __init__(self, price: float, size: float):
+    def __init__(self, price, size):
         self.price = price
         self.size = size
 
@@ -347,11 +347,11 @@ class RunnerBookSP:
 
     def __init__(
         self,
-        nearPrice: float = None,
-        farPrice: float = None,
-        backStakeTaken: list = None,
-        layLiabilityTaken: list = None,
-        actualSP: float = None,
+        nearPrice=None,
+        farPrice=None,
+        backStakeTaken=None,
+        layLiabilityTaken=None,
+        actualSP=None,
     ):
         self.near_price = nearPrice
         self.far_price = farPrice
@@ -369,9 +369,9 @@ class RunnerBookEX:
 
     def __init__(
         self,
-        availableToBack: list = None,
-        availableToLay: list = None,
-        tradedVolume: list = None,
+        availableToBack=None,
+        availableToLay=None,
+        tradedVolume=None,
     ):
         self.available_to_back = [PriceSize(**i) for i in availableToBack]
         self.available_to_lay = [PriceSize(**i) for i in availableToLay]
@@ -399,23 +399,23 @@ class RunnerBookOrder:
 
     def __init__(
         self,
-        betId: str,
-        avgPriceMatched: float,
-        bspLiability: float,
-        orderType: str,
-        persistenceType: str,
-        price: float,
-        side: str,
-        sizeCancelled: float,
-        sizeLapsed: float,
-        sizeMatched: float,
-        sizeRemaining: float,
-        sizeVoided: float,
-        status: str,
-        size: float,
-        customerStrategyRef: str = None,
-        customerOrderRef: str = None,
-        placedDate: str = None,
+        betId,
+        avgPriceMatched,
+        bspLiability,
+        orderType,
+        persistenceType,
+        price,
+        side,
+        sizeCancelled,
+        sizeLapsed,
+        sizeMatched,
+        sizeRemaining,
+        sizeVoided,
+        status,
+        size,
+        customerStrategyRef=None,
+        customerOrderRef=None,
+        placedDate=None,
     ):
         self.bet_id = betId
         self.avg_price_matched = avgPriceMatched
@@ -448,12 +448,12 @@ class RunnerBookMatch:
 
     def __init__(
         self,
-        price: float,
-        side: str,
-        size: float,
-        betId: str = None,
-        matchId: str = None,
-        matchDate: str = None,
+        price,
+        side,
+        size,
+        betId=None,
+        matchId=None,
+        matchDate=None,
     ):
         self.bet_id = betId
         self.match_id = matchId
@@ -480,18 +480,18 @@ class RunnerBook:
 
     def __init__(
         self,
-        selectionId: int,
-        status: str,
-        handicap: float,
-        adjustmentFactor: float = None,
-        lastPriceTraded: float = None,
-        totalMatched: float = None,
-        removalDate: str = None,
-        sp: dict = None,
-        ex: dict = None,
-        orders: list = None,
-        matches: list = None,
-        matchesByStrategy: list = None,
+        selectionId,
+        status,
+        handicap,
+        adjustmentFactor=None,
+        lastPriceTraded=None,
+        totalMatched=None,
+        removalDate=None,
+        sp=None,
+        ex=None,
+        orders=None,
+        matches=None,
+        matchesByStrategy=None,
     ):
         self.selection_id = selectionId
         self.status = status
@@ -625,28 +625,28 @@ class CurrentOrder:
 
     def __init__(
         self,
-        betId: str,
-        averagePriceMatched: float,
-        bspLiability: float,
-        handicap: float,
-        marketId: str,
-        orderType: str,
-        persistenceType: str,
-        placedDate: str,
-        regulatorCode: str,
-        selectionId: int,
-        side: str,
-        sizeCancelled: float,
-        sizeLapsed: float,
-        sizeMatched: float,
-        sizeRemaining: float,
-        sizeVoided: float,
-        status: str,
-        priceSize: dict,
-        matchedDate: str = None,
-        customerStrategyRef: str = None,
-        customerOrderRef: str = None,
-        regulatorAuthCode: str = None,
+        betId,
+        averagePriceMatched,
+        bspLiability,
+        handicap,
+        marketId,
+        orderType,
+        persistenceType,
+        placedDate,
+        regulatorCode,
+        selectionId,
+        side,
+        sizeCancelled,
+        sizeLapsed,
+        sizeMatched,
+        sizeRemaining,
+        sizeVoided,
+        status,
+        priceSize,
+        matchedDate=None,
+        customerStrategyRef=None,
+        customerOrderRef=None,
+        regulatorAuthCode=None,
     ):
         self.bet_id = betId
         self.average_price_matched = averagePriceMatched
@@ -701,14 +701,14 @@ class ItemDescription:
 
     def __init__(
         self,
-        eventDesc: str = None,
-        eventTypeDesc: str = None,
-        marketDesc: str = None,
-        marketStartTime: str = None,
-        marketType: str = None,
-        numberOfWinners: int = None,
-        runnerDesc: str = None,
-        eachWayDivisor: float = None,
+        eventDesc=None,
+        eventTypeDesc=None,
+        marketDesc=None,
+        marketStartTime=None,
+        marketType=None,
+        numberOfWinners=None,
+        runnerDesc=None,
+        eachWayDivisor=None,
     ):
         self.event_desc = eventDesc
         self.event_type_desc = eventTypeDesc
@@ -803,10 +803,10 @@ class ProfitAndLosses:
 
     def __init__(
         self,
-        selectionId: int,
-        ifWin: float = None,
-        ifLose: float = None,
-        ifPlace: float = None,
+        selectionId,
+        ifWin=None,
+        ifLose=None,
+        ifPlace=None,
     ):
         self.selection_id = selectionId
         self.if_win = ifWin
@@ -843,13 +843,13 @@ class LimitOrder:
 
     def __init__(
         self,
-        price: float,
-        size: float = None,
-        persistenceType: str = None,
-        timeInForce: str = None,
-        minFillSize: float = None,
-        betTargetType: str = None,
-        betTargetSize: float = None,
+        price,
+        size=None,
+        persistenceType=None,
+        timeInForce=None,
+        minFillSize=None,
+        betTargetType=None,
+        betTargetSize=None,
     ):
         self.persistence_type = persistenceType
         self.price = price
@@ -866,7 +866,7 @@ class LimitOnCloseOrder:
     :type price: float
     """
 
-    def __init__(self, liability: float, price: float):
+    def __init__(self, liability, price):
         self.liability = liability
         self.price = price
 
@@ -876,7 +876,7 @@ class MarketOnCloseOrder:
     :type liability: float
     """
 
-    def __init__(self, liability: float):
+    def __init__(self, liability):
         self.liability = liability
 
 
@@ -892,14 +892,14 @@ class PlaceOrderInstruction:
 
     def __init__(
         self,
-        selectionId: int,
-        side: str,
-        orderType: str,
-        limitOrder: dict = None,
-        limitOnCloseOrder: dict = None,
-        marketOnCloseOrder: dict = None,
-        handicap: float = None,
-        customerOrderRef: str = None,
+        selectionId,
+        side,
+        orderType,
+        limitOrder=None,
+        limitOnCloseOrder=None,
+        marketOnCloseOrder=None,
+        handicap=None,
+        customerOrderRef=None,
     ):
         self.selection_id = selectionId
         self.side = side
@@ -929,14 +929,14 @@ class PlaceOrderInstructionReports:
 
     def __init__(
         self,
-        status: str,
-        instruction: dict = None,
-        orderStatus: str = None,
-        betId: int = None,
-        averagePriceMatched: float = None,
-        sizeMatched: float = None,
-        placedDate: str = None,
-        errorCode: str = None,
+        status,
+        instruction=None,
+        orderStatus=None,
+        betId=None,
+        averagePriceMatched=None,
+        sizeMatched=None,
+        placedDate=None,
+        errorCode=None,
     ):
         self.status = status
         self.order_status = orderStatus
@@ -974,7 +974,7 @@ class CancelOrderInstruction:
     :type size_reduction: float
     """
 
-    def __init__(self, betId: str, sizeReduction: float = None):
+    def __init__(self, betId, sizeReduction=None):
         self.bet_id = betId
         self.size_reduction = sizeReduction
 
@@ -990,11 +990,11 @@ class CancelOrderInstructionReports:
 
     def __init__(
         self,
-        status: str,
-        instruction: dict,
-        sizeCancelled: float = None,
-        cancelledDate: str = None,
-        errorCode: str = None,
+        status,
+        instruction,
+        sizeCancelled=None,
+        cancelledDate=None,
+        errorCode=None,
     ):
         self.status = status
         self.size_cancelled = sizeCancelled
@@ -1029,7 +1029,7 @@ class UpdateOrderInstruction:
     :type new_persistence_type: unicode
     """
 
-    def __init__(self, betId: str, newPersistenceType: str):
+    def __init__(self, betId, newPersistenceType):
         self.bet_id = betId
         self.new_persistence_type = newPersistenceType
 
@@ -1041,7 +1041,7 @@ class UpdateOrderInstructionReports:
     :type status: unicode
     """
 
-    def __init__(self, status: str, instruction: dict, errorCode: str = None):
+    def __init__(self, status, instruction, errorCode=None):
         self.status = status
         self.instruction = UpdateOrderInstruction(**instruction)
         self.error_code = errorCode
@@ -1077,10 +1077,10 @@ class ReplaceOrderInstructionReports:
 
     def __init__(
         self,
-        status: str,
-        cancelInstructionReport: dict,
-        placeInstructionReport: dict,
-        errorCode: str = None,
+        status,
+        cancelInstructionReport,
+        placeInstructionReport,
+        errorCode=None,
     ):
         self.status = status
         self.cancel_instruction_reports = CancelOrderInstructionReports(

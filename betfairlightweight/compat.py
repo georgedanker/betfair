@@ -16,7 +16,7 @@ except ImportError:
 try:
     import ciso8601
 
-    def parse_datetime(datetime_string: str) -> Optional[datetime]:
+    def parse_datetime(datetime_string):
         try:
             return ciso8601.parse_datetime_as_naive(datetime_string)
         except ValueError:
@@ -25,7 +25,7 @@ try:
 
 except ImportError:
 
-    def parse_datetime(datetime_string: str) -> Optional[datetime]:
+    def parse_datetime(datetime_string):
         try:
             return datetime.strptime(datetime_string, "%Y-%m-%dT%H:%M:%S.%fZ")
         except ValueError:

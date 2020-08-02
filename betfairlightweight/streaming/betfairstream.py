@@ -28,13 +28,13 @@ class BetfairStream:
 
     def __init__(
         self,
-        unique_id: int,
-        listener: BaseListener,
-        app_key: str,
-        session_token: str,
-        timeout: float,
-        buffer_size: int,
-        host: Optional[str],
+        unique_id,
+        listener,
+        app_key,
+        session_token,
+        timeout,
+        buffer_size,
+        host,
     ):
         self._unique_id = unique_id
         self.listener = listener
@@ -49,7 +49,7 @@ class BetfairStream:
         self._socket = None
         self._running = False
 
-    def start(self) -> None:
+    def start(self):
         """Starts read loop, connects/authenticates
         if not already running.
         """
@@ -58,7 +58,7 @@ class BetfairStream:
             self.authenticate()
         self._read_loop()
 
-    def stop(self) -> None:
+    def stop(self):
         """Stops read loop and closes socket if it has been created.
         """
         self._running = False
@@ -72,7 +72,7 @@ class BetfairStream:
             pass
         self._socket = None
 
-    def authenticate(self) -> int:
+    def authenticate(self):
         """Authentication request.
         """
         unique_id = self.new_unique_id()
@@ -85,7 +85,7 @@ class BetfairStream:
         self._send(message)
         return unique_id
 
-    def heartbeat(self) -> int:
+    def heartbeat(self):
         """Heartbeat request to keep session alive.
         """
         unique_id = self.new_unique_id()
@@ -95,14 +95,14 @@ class BetfairStream:
 
     def subscribe_to_markets(
         self,
-        market_filter: dict,
-        market_data_filter: dict,
-        initial_clk: str = None,
-        clk: str = None,
-        conflate_ms: int = None,
-        heartbeat_ms: int = None,
-        segmentation_enabled: bool = True,
-    ) -> int:
+        market_filter,
+        market_data_filter,
+        initial_clk=None,
+        clk=None,
+        conflate_ms=None,
+        heartbeat_ms=None,
+        segmentation_enabled=True,
+    ):
         """
         Market subscription request.
 
@@ -137,13 +137,13 @@ class BetfairStream:
 
     def subscribe_to_orders(
         self,
-        order_filter: dict = None,
-        initial_clk: str = None,
-        clk: str = None,
-        conflate_ms: int = None,
-        heartbeat_ms: int = None,
-        segmentation_enabled: bool = True,
-    ) -> int:
+        order_filter=None,
+        initial_clk=None,
+        clk=None,
+        conflate_ms=None,
+        heartbeat_ms=None,
+        segmentation_enabled=True,
+    ):
         """
         Order subscription request.
 
@@ -174,17 +174,17 @@ class BetfairStream:
         self._send(message)
         return unique_id
 
-    def new_unique_id(self) -> int:
+    def new_unique_id(self):
         self._unique_id += 1
         return self._unique_id
 
-    def _connect(self) -> None:
+    def _connect(self):
         """Creates socket and sets running to True.
         """
         self._socket = self._create_socket()
         self._running = True
 
-    def _create_socket(self) -> socket.socket:
+    def _create_socket(self):
         """Creates ssl socket, connects to stream api and
         sets timeout.
         """
@@ -194,7 +194,7 @@ class BetfairStream:
         s.settimeout(self.timeout)
         return s
 
-    def _read_loop(self) -> None:
+    def _read_loop(self):
         """Read loop, splits by CRLF and pushes received data
         to _data.
         """
@@ -208,7 +208,7 @@ class BetfairStream:
                     if received_data:
                         self._data(received_data)
 
-    def _receive_all(self) -> Optional[str]:
+    def _receive_all(self):
         """Whilst socket is running receives data from socket,
         till CRLF is detected.
         """
@@ -239,7 +239,7 @@ class BetfairStream:
             data += part.decode(self.__encoding)
         return data
 
-    def _data(self, received_data: str) -> None:
+    def _data(self, received_data):
         """Sends data to listener, if False is returned; socket
         is closed.
 
@@ -249,7 +249,7 @@ class BetfairStream:
             self.stop()
             raise ListenerError(self.listener.connection_id, received_data)
 
-    def _send(self, message: dict) -> None:
+    def _send(self, message):
         """If not running connects socket and
         authenticates. Adds CRLF and sends message
         to Betfair.
@@ -269,10 +269,10 @@ class BetfairStream:
             self.stop()
             raise SocketError("[Connect: %s]: Socket %s" % (self._unique_id, e))
 
-    def __str__(self) -> str:
+    def __str__(self):
         return "<BetfairStream [%s]>" % ("running" if self._running else "not running")
 
-    def __repr__(self) -> str:
+    def __repr__(self):
         return "<BetfairStream>"
 
 
@@ -281,7 +281,7 @@ class HistoricalStream:
     historical data.
     """
 
-    def __init__(self, file_path: str, listener: BaseListener):
+    def __init__(self, file_path, listener):
         """
         :param str file_path: Directory of betfair data
         :param BaseListener listener: Listener object
@@ -290,15 +290,14 @@ class HistoricalStream:
         self.listener = listener
         self._running = False
 
-    def start(self) -> None:
+    def start(self):
         self._running = True
         self._read_loop()
 
-    def stop(self) -> None:
+    def stop(self):
         self._running = False
 
-    def _read_loop(self) -> None:
-        self.listener.register_stream(0, "marketSubscription")
+    def _read_loop(self):
         with open(self.file_path, "r") as f:
             for update in f:
                 if self.listener.on_data(update) is False:
@@ -322,7 +321,6 @@ class HistoricalGeneratorStream(HistoricalStream):
 
     def _read_loop(self):
         self._running = True
-        self.listener.register_stream(0, "marketSubscription")
         with open(self.file_path, "r") as f:
             for update in f:
                 if self.listener.on_data(update) is False:

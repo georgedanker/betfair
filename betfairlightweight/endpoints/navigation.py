@@ -11,7 +11,7 @@ class Navigation(BaseEndpoint):
     Navigation operations.
     """
 
-    def list_navigation(self, session: requests.Session = None) -> dict:
+    def list_navigation(self, session=None):
         """
         This Navigation Data for Applications service allows the retrieval of the
         full Betfair market navigation menu from a compressed file.
@@ -23,8 +23,8 @@ class Navigation(BaseEndpoint):
         return self.request(session=session)
 
     def request(
-        self, method: str = None, params: dict = None, session: requests.Session = None
-    ) -> (dict, float):
+        self, method=None, params=None, session=None
+    ):
         session = session or self.client.session
         try:
             response = session.get(
@@ -46,5 +46,5 @@ class Navigation(BaseEndpoint):
         return response_json
 
     @property
-    def url(self) -> str:
+    def url(self):
         return self.client.navigation_uri

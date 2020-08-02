@@ -7,14 +7,14 @@ from . import endpoints
 class APIClient(BaseClient):
     def __init__(
         self,
-        username: str,
-        password: str = None,
-        app_key: str = None,
-        certs: str = None,
-        locale: str = None,
-        cert_files: list = None,
-        lightweight: bool = False,
-        session: requests.Session = None,
+        username,
+        password=None,
+        app_key=None,
+        certs=None,
+        locale=None,
+        cert_files=None,
+        lightweight=False,
+        session=None,
     ):
         """
         Creates API client for API operations.
@@ -52,8 +52,8 @@ class APIClient(BaseClient):
         self.race_card = endpoints.RaceCard(self)
         self.historic = endpoints.Historic(self)
 
-    def __repr__(self) -> str:
+    def __repr__(self):
         return "<APIClient [%s]>" % self.username
 
-    def __str__(self) -> str:
+    def __str__(self):
         return "APIClient"
